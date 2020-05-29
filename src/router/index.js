@@ -1,24 +1,30 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
+
+import WelcomePage from '@/views/WelcomePage.vue';
+
+// SPA auth
+import RegistrationPage from '@/views/auth/Registration.vue'
+import LoginPage from '@/views/auth/Login.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: "/",
-    name: "Home",
-    component: Home
+    name: "welcome-page",
+    component: WelcomePage,
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
-  }
+    path: "/register",
+    name: "registration-page",
+    component: RegistrationPage,
+  },
+  {
+    path: "/login",
+    name: "login-page",
+    component: LoginPage,
+  },
 ];
 
 const router = new VueRouter({
