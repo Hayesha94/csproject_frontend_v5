@@ -1,14 +1,13 @@
 <template>
-
   <v-app>
     <v-content>
       <v-container>
         <v-form>
           <v-card width="500" class="mx-auto mt-10">
-            <v-card-title class="justify-center">
-              <h1 class=' my-2 grey--text text--darken-1'>Registration</h1>
+            <v-card-title class="justify-center blue darken-1">
+              <h1 class=' my-2 grey--text text--darken-4'>Registration</h1>
             </v-card-title>
-            <v-card-text class="pb-0">
+            <v-card-text class="pb-0 ">
               <v-text-field label="Username"
                 prepend-icon="mdi-account-circle"
                 v-model="credentials.username"
@@ -55,10 +54,16 @@
             <v-card-actions class="d-flex justify-center">
               <v-btn 
                 class="primary"
+                @click.prevent="register()"
               >
                 Register
               </v-btn>
             </v-card-actions>
+            <div class="d-flex justify-center pb-5">
+              <router-link link='false' :to="{ name: 'login-page' }">
+                Already have an account? Login
+              </router-link>
+            </div>
           </v-card>
         </v-form>
       </v-container>
@@ -102,6 +107,16 @@ export default {
       ],
     }
   },
+  methods: {
+    register() {
+      this.$store.dispatch('Register/register_user', this.credentials)
+        .then( response => {
+          if (response === true) {
+            this.$router.push({ name: 'login-page'})
+          }
+      });
+    }
+  }
 }
 </script>
 
