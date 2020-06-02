@@ -7,6 +7,9 @@ import WelcomePage from '@/views/WelcomePage.vue';
 import RegistrationPage from '@/views/auth/Registration.vue'
 import LoginPage from '@/views/auth/Login.vue';
 
+// tourist pages
+import TDashboard from '@/views/tourist/Dashboard.vue';
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -26,7 +29,13 @@ const routes = [
     path: "/login",
     name: "login-page",
     component: LoginPage,
-    meta: { guestOnly: true}
+    meta: { guestOnly: true},
+  },
+  {
+    path: '/tourist/dashboard',
+    name: 'tourist-dashboard',
+    component: TDashboard,
+    meta: { authOnly: true},
   },
 ];
 
@@ -53,7 +62,7 @@ router.beforeEach((to, from, next) => {
   } else if (to.matched.some(record => record.meta.guestOnly)) {
     if (isLoggedIn()) {
       next({
-        path: '/',
+        path: '/tourist/dashboard',
         query: { redirect: to.fullPath }
       })
     } else {

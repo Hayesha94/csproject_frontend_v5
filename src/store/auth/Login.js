@@ -10,6 +10,18 @@ export const state = {
 export const getters = {
   loggedIn(state) {
     return state.loggedIn;
+  },
+
+  user(state) {
+    if (state.user) {
+      return state.user;
+    }
+  },
+
+  role(state) {
+    if (state.user) {
+      return state.user.role;
+    }
   }
 }
 
@@ -46,9 +58,11 @@ export const actions = {
       .then( () => {
         console.log('[*] logout_user');
         commit('REMOVE_AUTH_USER');
+        return true;
       })
       .catch( error => {
         console.log('[!] logout_user: ', error.response);
+        return false;
     })
   }
 }

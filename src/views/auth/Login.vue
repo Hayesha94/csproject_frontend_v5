@@ -2,7 +2,7 @@
   <v-app>
 
     <v-card width="400" class="mx-auto my-auto">
-      <v-card-title class="d-flex justify-center  blue darken-1">
+      <v-card-title class="d-flex justify-center">
         <h1 class="display-1 grey--text text--darken-4">Login</h1>
       </v-card-title>
       <v-card-text class="pt-2">
@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'Login',
   data() {
@@ -63,12 +65,21 @@ export default {
       },
     }
   },
+  computed: {
+    ...mapGetters({
+      role: 'Login/role',
+    })
+  },
   methods: {
     login() {
       this.$store.dispatch('Login/login_user', this.credentials)
         .then( success => {
           if (success === true) {
-            this.$router.push( {name: 'welcome-page'})
+            if (this.role == 'tourist') {
+              this.$router.push( {name: 'tourist-dashboard'});
+            } else if (this.role == 'guide') {
+              this.$router.push( {name: 'guide-dashboard'});
+            }
           }
       });
     }

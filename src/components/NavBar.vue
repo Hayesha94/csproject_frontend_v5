@@ -9,8 +9,8 @@
     <v-toolbar-title>TGS</v-toolbar-title>
     <v-spacer></v-spacer>
     
-    <v-btn link='false' text rounded :to="{ name: 'welcome-page' }">Home</v-btn>
-    <v-btn v-if="loggedIn" link='false' text rounded>Dashboard</v-btn>
+    <v-btn link='false' text rounded :to="{ name: 'welcome-page' }" exact>Home</v-btn>
+    <v-btn v-if="loggedIn" link='false' text rounded :to="{ name: dashboard }">Dashboard</v-btn>
 
     <v-btn v-if="!loggedIn" link='false' text rounded :to="{ name: 'login-page' }">Login</v-btn>
     <v-btn v-if="!loggedIn" link='false' text rounded :to="{ name: 'registration-page' }">Register</v-btn>
@@ -29,8 +29,18 @@ export default {
     }
   },
   computed: {
+    dashboard() {
+      if (this.role === 'tourist') {
+        return 'tourist-dashboard';
+      } else if (this.role === 'guide') {
+        return 'guide-dashboard';
+      } else {
+        return true;
+      }
+    },
     ...mapGetters({
       loggedIn: 'Login/loggedIn',
+      role: 'Login/role'
     })
   },
   methods: {
@@ -39,9 +49,10 @@ export default {
         .then( success => {
           if (success) {
             this.$router.push({ name: 'welcome-page'});
+            console.log('return to home page');
           }
-        })
-    }
+      });
+    },
   }
 }
 </script>

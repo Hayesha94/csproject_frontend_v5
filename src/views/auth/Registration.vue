@@ -4,7 +4,7 @@
       <v-container>
         <v-form>
           <v-card width="500" class="mx-auto mt-10">
-            <v-card-title class="justify-center blue darken-1">
+            <v-card-title class="justify-center">
               <h1 class=' my-2 grey--text text--darken-4'>Registration</h1>
             </v-card-title>
             <v-card-text class="pb-0 ">
