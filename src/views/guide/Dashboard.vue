@@ -34,23 +34,24 @@ export default {
   data() {
     return {
       items: [
-        { text: 'Dashboard', icon: 'mdi-view-dashboard', url: '/tourist/dashboard' },
-        { text: 'Profile', icon: 'mdi-account', url: '/tourist/dashboard/profile/personalinfo' },
+        { text: 'Dashboard', icon: 'mdi-view-dashboard', url: '/guide/dashboard' },
+        { text: 'Profile', icon: 'mdi-account', url: '/guide/dashboard/profile' },
         { text: 'My Appointments', icon: 'mdi-calendar-account', url: '' },
-        { text: 'Events', icon: 'mdi-calendar-clock', url: '' },
+        { text: 'Posts', icon: 'mdi-typewriter', url: '/guide/dashboard/posts/viewposts' },
         { text: 'Notifications', icon: 'mdi-bell', url: '' },
         { text: 'Settings', icon: 'mdi-cog', url: '' },
       ],
     }
   },
   computed: {
-    ...mapGetters({
-      user: 'Login/user',
-    })
+    ...mapGetters('Login', [
+      'user',
+    ])
   },
 }
 </script>
 
 <style>
 
+/* { text: 'Timeline', icon: 'mdi-timeline-clock-outline', url: '' }, */
 </style>

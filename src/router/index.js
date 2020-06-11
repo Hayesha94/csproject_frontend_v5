@@ -9,6 +9,18 @@ import LoginPage from '@/views/auth/Login.vue';
 
 // tourist pages
 import TDashboard from '@/views/tourist/Dashboard.vue';
+import TProfile from '@/views/tourist/profile/Profile.vue';
+import TPersonalInfo from '@/views/tourist/profile/PersonalInfo.vue';
+import TImageGallery from '@/views/tourist/profile/ImageGallery.vue';
+
+// guide pages
+import GDashboard from '@/views/guide/Dashboard.vue';
+import GProfile from '@/views/guide/profile/Profile.vue';
+import GPosts from '@/views/guide/posts/Posts.vue';
+import GViewPosts from '@/views/guide/posts/ViewPosts.vue'
+import GCreatePost from '@/views/guide/posts/CreatePost.vue'
+
+import { Store } from "vuex";
 
 Vue.use(VueRouter);
 
@@ -36,6 +48,55 @@ const routes = [
     name: 'tourist-dashboard',
     component: TDashboard,
     meta: { authOnly: true},
+    children: [
+      {
+        path: 'profile',
+        name: 'tourist-profile',
+        component: TProfile,
+        children: [
+          {
+            path: 'personalinfo',
+            name: 'tourist-personal-info',
+            component: TPersonalInfo,
+          },
+          {
+            path: 'imagegallery',
+            name: 'tourist-image-gallery',
+            component: TImageGallery,
+          },
+        ]
+      }
+    ]
+  },
+  {
+    path: '/guide/dashboard',
+    name: 'guide-dashboard',
+    component: GDashboard,
+    meta: { authOnly: true},
+    children: [
+      {
+        path: 'profile',
+        name: 'guide-profile',
+        component: GProfile,
+      },
+      {
+        path: 'posts',
+        name: 'guide-posts',
+        component: GPosts,
+        children: [
+          {
+            path: 'viewposts',
+            name: 'guide-view-posts',
+            component: GViewPosts,
+          },
+          {
+            path: 'createpost',
+            name: 'guide-create-post',
+            component: GCreatePost,
+          },
+        ]
+      },
+    ]
   },
 ];
 
@@ -60,9 +121,14 @@ router.beforeEach((to, from, next) => {
       next()
     }
   } else if (to.matched.some(record => record.meta.guestOnly)) {
-    if (isLoggedIn()) {
+    if (isLoggedIn() && Store.Login.role === 'tourist') {
       next({
         path: '/tourist/dashboard',
+        query: { redirect: to.fullPath }
+      })
+    } else if (isLoggedIn() && Store.Login.role === 'guide') {
+      next({
+        path: '/guide/dashboard',
         query: { redirect: to.fullPath }
       })
     } else {

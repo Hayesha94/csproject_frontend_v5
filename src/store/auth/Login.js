@@ -22,6 +22,18 @@ export const getters = {
     if (state.user) {
       return state.user.role;
     }
+  },
+
+  fullName(state) {
+    if (state.user.fname && state.user.lname) {
+      return state.user.fname + ' ' + state.user.lname;
+    }
+  },
+
+  userName(state) {
+    if (state.user.username) {
+      return state.user.username;
+    }
   }
 }
 
