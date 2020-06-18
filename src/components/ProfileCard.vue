@@ -1,6 +1,8 @@
 <template>
   <div>
-    <v-list>
+    <v-list
+      dense
+    >
       <v-list-item>
         <v-badge
           left

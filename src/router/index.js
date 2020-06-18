@@ -12,6 +12,7 @@ import TDashboard from '@/views/tourist/Dashboard.vue';
 import TProfile from '@/views/tourist/profile/Profile.vue';
 import TPersonalInfo from '@/views/tourist/profile/PersonalInfo.vue';
 import TImageGallery from '@/views/tourist/profile/ImageGallery.vue';
+import TDashboardWall from '@/views/tourist/dashboard/DashboardWall.vue';
 
 // guide pages
 import GDashboard from '@/views/guide/Dashboard.vue';
@@ -49,6 +50,11 @@ const routes = [
     component: TDashboard,
     meta: { authOnly: true},
     children: [
+      {
+        path: 'dashboardwall',
+        name: 'tourist-dashboardwall',
+        component: TDashboardWall,
+      },
       {
         path: 'profile',
         name: 'tourist-profile',

@@ -65,7 +65,7 @@ export const actions = {
     });
   },
 
-  logout_user( {commit}) {
+  logout_user({commit}) {
     return auth.logout()
       .then( () => {
         console.log('[*] logout_user');

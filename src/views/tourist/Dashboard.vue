@@ -24,7 +24,6 @@ import { mapGetters } from 'vuex';
 import NavBar from '@/components/NavBar.vue';
 import Footer from '@/components/Footer.vue';
 import LeftNavPanel from '@/components/LeftNavPanel.vue';
-
 export default {
   components: {
     NavBar,
@@ -34,7 +33,7 @@ export default {
   data() {
     return {
       items: [
-        { text: 'Dashboard', icon: 'mdi-view-dashboard', url: '/tourist/dashboard' },
+        { text: 'Dashboard', icon: 'mdi-view-dashboard', url: '/tourist/dashboard/dashboardwall' },
         { text: 'Profile', icon: 'mdi-account', url: '/tourist/dashboard/profile/personalinfo' },
         { text: 'My Appointments', icon: 'mdi-calendar-account', url: '' },
         { text: 'Events', icon: 'mdi-calendar-clock', url: '' },

@@ -31,7 +31,7 @@ export default {
   computed: {
     dashboard() {
       if (this.role === 'tourist') {
-        return 'tourist-dashboard';
+        return 'tourist-dashboardwall';
       } else if (this.role === 'guide') {
         return 'guide-dashboard';
       } else {

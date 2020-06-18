@@ -76,7 +76,7 @@ export default {
         .then( success => {
           if (success === true) {
             if (this.role == 'tourist') {
-              this.$router.push( {name: 'tourist-dashboard'});
+              this.$router.push( {name: 'tourist-dashboardwall'});
             } else if (this.role == 'guide') {
               this.$router.push( {name: 'guide-dashboard'});
             }

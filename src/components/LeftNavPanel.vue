@@ -1,13 +1,13 @@
 <template>
   <div class="d-flex">
-    <v-col class="col-3">
+    <v-col cols="3">
       <v-card
         class="mx-auto my-6"
         flat
       >
         <ProfileCard></ProfileCard>
         
-        <v-list rounded>
+        <v-list rounded dense>
           <v-list-item-group color="primary">
             <v-list-item
               v-for="(item, i) in navLinks"

@@ -1,6 +1,11 @@
 <template>
   <div>
-    <CreatePost></CreatePost>
+    <v-row>
+      <v-col>
+        <CreatePost></CreatePost>
+      </v-col>
+      <v-col cols="1"></v-col>
+    </v-row>
   </div>
 </template>
 
