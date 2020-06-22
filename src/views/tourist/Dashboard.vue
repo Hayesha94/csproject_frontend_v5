@@ -35,8 +35,8 @@ export default {
       items: [
         { text: 'Dashboard', icon: 'mdi-view-dashboard', url: '/tourist/dashboard/dashboardwall' },
         { text: 'Profile', icon: 'mdi-account', url: '/tourist/dashboard/profile/personalinfo' },
-        { text: 'My Appointments', icon: 'mdi-calendar-account', url: '' },
-        { text: 'Events', icon: 'mdi-calendar-clock', url: '' },
+        { text: 'My Appointments', icon: 'mdi-calendar-account', url: '/tourist/appointments' },
+        /* { text: 'Events', icon: 'mdi-calendar-clock', url: '' }, */
         { text: 'Notifications', icon: 'mdi-bell', url: '' },
         { text: 'Settings', icon: 'mdi-cog', url: '' },
       ],

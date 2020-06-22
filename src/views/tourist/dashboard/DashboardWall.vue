@@ -33,12 +33,18 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('Posts/get_posts');
+    this.$store.dispatch('Posts/get_posts')
+      .then( () => {
+        this.$store.dispatch('Events/get_registered_events', {
+          'tourist_id': this.user_id,
+        });
+    });
   },
   computed: {
     //
     ...mapGetters({
       posts: 'Posts/posts',
+      user_id: 'Login/userId',
     })
   },
 }

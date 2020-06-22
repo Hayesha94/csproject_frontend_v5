@@ -3,8 +3,8 @@ import auth from '@/services/Auth.js';
 export const namespaced = true;
 
 export const state = {
-    user: null,
-    loggedIn: false,
+  user: null,
+  loggedIn: false,
 }
 
 export const getters = {
@@ -34,21 +34,28 @@ export const getters = {
     if (state.user.username) {
       return state.user.username;
     }
+  },
+
+  userId(state) {
+    if (state.user) {
+      return state.user.id;
+    }
   }
 }
 
 export const mutations = {
-    SET_AUTH_USER(state, data) {
-      state.user = data;
-      localStorage.setItem('auth', JSON.stringify(data));
-      state.loggedIn = !!localStorage.getItem('auth');
-    },
+  SET_AUTH_USER(state, data) {
+    state.user = data;
+    localStorage.setItem('auth', JSON.stringify(data));
+    state.loggedIn = !!localStorage.getItem('auth');
+  },
 
-    REMOVE_AUTH_USER(state) {
-      state.user = null;
-      localStorage.removeItem('auth');
-      state.loggedIn = !!localStorage.getItem('auth');
-    },
+  REMOVE_AUTH_USER(state) {
+    state.user = null;
+    localStorage.removeItem('auth');
+    localStorage.removeItem('events_registered');
+    state.loggedIn = !!localStorage.getItem('auth');
+  },
 }
 
 export const actions = {

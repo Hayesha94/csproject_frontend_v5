@@ -27,15 +27,39 @@
             </div>
             <div>
               <div>
-                <v-btn
-                  color="error"
-                  text
-                  slot
-                  disabled
-                >
-                  <v-icon>mdi-plus</v-icon>
-                  <span>Register</span>
-                </v-btn>
+                <div class='d-flex' v-if="isRegistered(event.id)">
+                  <v-btn
+                    color="success"
+                    text
+                    slot
+                    rounded
+                  >
+                    <v-icon small>mdi-check</v-icon>
+                    <span>Registered</span>
+                  </v-btn>
+                  <v-chip 
+                    class="success"
+                  >
+                    5 hours left
+                  </v-chip>
+                </div>
+                <div class='d-flex' v-else>
+                  <v-btn
+                    color="error"
+                    text
+                    slot
+                    rounded
+                    @click="register(event.id)"
+                  >
+                    <v-icon>mdi-plus</v-icon>
+                    <span>Register</span>
+                  </v-btn>
+                  <v-chip
+                    color="warning"
+                  >
+                    5 days left
+                  </v-chip>
+                </div>
               </div>
             </div>
           </div>
@@ -44,19 +68,20 @@
           <span class="title-2 grey--text">{{ event.title }}</span>
         </v-card-title>
         <v-card-text>
-          <!-- <v-img
+          <v-img
             src="https://image.shutterstock.com/image-photo/mountains-during-sunset-beautiful-natural-260nw-407021107.jpg"
           >
-          </v-img> -->
+          </v-img>
           {{ event.description }}
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="d-flex justify-space-around">
-            <div class="d-flex align-center">
+            <div class="d-flex align-baseline">
               <span class="caption blue-grey--text">Like</span>
               <v-btn
                 icon
                 color="blue"
+                @click="like(event.id)"
               >
                 <v-icon>mdi-thumb-up</v-icon>
               </v-btn>
@@ -106,6 +131,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   props: [
     'event'
@@ -115,6 +142,20 @@ export default {
       //
     }
   },
+  computed: {
+    ...mapGetters({
+      user_id: 'Login/userId',
+      isRegistered: 'Events/isRegistered',
+    })
+  },
+  methods: {
+    register(id) {
+      this.$store.dispatch('Events/register_to_event', {
+        'event_id': id,
+        'tourist_id': this.user_id,
+      });
+    }
+  }
 }
 </script>
 

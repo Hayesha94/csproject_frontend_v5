@@ -13,6 +13,9 @@ import TProfile from '@/views/tourist/profile/Profile.vue';
 import TPersonalInfo from '@/views/tourist/profile/PersonalInfo.vue';
 import TImageGallery from '@/views/tourist/profile/ImageGallery.vue';
 import TDashboardWall from '@/views/tourist/dashboard/DashboardWall.vue';
+import TAppointments from '@/views/tourist/appointments/Appointments.vue'
+import TViewAppointments from '@/views/tourist/appointments/ViewAppointments.vue'
+import TCreateAppointment from '@/views/tourist/appointments/CreateAppointment.vue'
 
 // guide pages
 import GDashboard from '@/views/guide/Dashboard.vue';
@@ -71,8 +74,25 @@ const routes = [
             component: TImageGallery,
           },
         ]
-      }
-    ]
+      },
+      {
+        path: '/tourist/appointments',
+        name: 'tourist-appointments',
+        component: TAppointments,
+        children: [
+          {
+            path: 'viewappointments',
+            name: 'tourist-view-appointments',
+            component: TViewAppointments,
+          },
+          {
+            path: 'createappointment',
+            name: 'tourist-create-appointment',
+            component: TCreateAppointment,
+          },
+        ]
+      },
+    ],
   },
   {
     path: '/guide/dashboard',

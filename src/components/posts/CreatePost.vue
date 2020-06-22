@@ -145,9 +145,8 @@
                       label="Event Title"
                     ></v-text-field>
                     <v-textarea
-                      autocomplete
-                      v-model="event.description"
                       label="Description"
+                      v-model="event.description"
                     ></v-textarea>
                     <v-text-field
                       v-model="event.participants"
@@ -408,8 +407,13 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'CreatePostComponent',
+  components: {
+    //
+  },
   data() {
     return {
       step: '1',
@@ -422,6 +426,11 @@ export default {
         body: '',
       }
     }
+  },
+  computed: {
+    ...mapGetters({
+      user_id: 'Login/user_id',
+    })
   },
   methods: {
     next() {
@@ -446,7 +455,10 @@ export default {
             }
           })
       } else if (this.post_type === 'event') {
-        this.$store.dispatch('Events/store_events', this.event)
+        this.$store.dispatch('Events/store_events', {
+          event: this.event,
+          guide_id: 2,
+        })
           .then( success => {
             if (success) {
               this.event = this.freshEventObject();
