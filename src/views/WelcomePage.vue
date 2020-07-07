@@ -5,9 +5,9 @@
     <NavBar></NavBar>
 
     <!-- content goes here -->
-    <v-content>
+    <v-main>
       hi, this is welcome page
-    </v-content>
+    </v-main>
 
     <!-- Footer section -->
     <Footer></Footer>

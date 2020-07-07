@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-content>
+    <v-main>
       <v-container>
         <v-form>
           <v-card width="500" class="mx-auto mt-10">
@@ -67,7 +67,7 @@
           </v-card>
         </v-form>
       </v-container>
-    </v-content>
+    </v-main>
   </v-app>
 
 </template>

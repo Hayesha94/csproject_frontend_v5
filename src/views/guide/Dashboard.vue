@@ -4,7 +4,7 @@
     <!-- Navigation bar -->
     <NavBar></NavBar>
 
-    <v-content app>
+    <v-main app>
       
       <v-container fluid>
 
@@ -12,7 +12,7 @@
         <LeftNavPanel :navLinks="items"></LeftNavPanel>
 
       </v-container>
-    </v-content>
+    </v-main>
 
     <!-- Footer -->
     <Footer></Footer>
