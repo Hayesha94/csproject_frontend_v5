@@ -32,6 +32,9 @@ new Vue({
       const regEvents = JSON.parse(regEventsString);
       this.$store.commit('Events/GET_REGISTERED_EVENTS_LIST', regEvents);
     }
+
+    this.$store.dispatch('Destinations/get_destinations');
+    this.$store.dispatch('Destinations/get_categories');
   },
   render: h => h(App)
 }).$mount("#app");

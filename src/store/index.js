@@ -4,9 +4,13 @@ import Vuex from "vuex";
 // auth
 import * as Register from '@/store/auth/Registration.js';
 import * as Login from '@/store/auth/Login.js';
+
 import * as Events from '@/store/Events.js';
 import * as Articles from '@/store/Articles.js';
 import * as Posts from '@/store/Posts.js';
+import * as Destinations from '@/store/Destinations.js';
+import * as Guides from '@/store/Guides.js';
+import * as Appointments from '@/store/Appointments.js';
 
 Vue.use(Vuex);
 
@@ -20,6 +24,9 @@ export default new Vuex.Store({
     Events,
     Articles,
     Posts,
+    Destinations,
+    Guides,
+    Appointments,
   }
 });
 

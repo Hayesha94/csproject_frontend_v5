@@ -97,16 +97,9 @@
           <v-card 
             flat
           >
-            <v-card-title>Edit {{ post_type }}</v-card-title>
+            <v-card-title>Create {{ post_type }}</v-card-title>
             <v-card-text v-if="post_type == 'article'">
-              <v-text-field
-                label="Title"
-                v-model="article.title"
-              />
-              <v-textarea
-                label="Body"
-                v-model="article.body"
-              />
+              <Editor></Editor>
             </v-card-text>
             <v-card-text v-else-if="post_type == 'event'">
               <v-expansion-panels
@@ -408,11 +401,12 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import Editor from '@/components/Editor.vue';
 
 export default {
   name: 'CreatePostComponent',
   components: {
-    //
+    Editor,
   },
   data() {
     return {

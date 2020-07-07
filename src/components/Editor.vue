@@ -4,18 +4,33 @@
     <tiptap-vuetify
       v-model="content"
       :extensions="extensions"
+      :card-props="{ flat: true }"
+      placeholder="Write Something"
     />
   </div>
 </template>
 
 <script>
 // import the component and the necessary extensions
-import { TiptapVuetify, Heading, Bold, Italic, Strike, Underline, Code, Paragraph, BulletList, OrderedList, ListItem, Link, Blockquote, HardBreak, HorizontalRule, History } from 'tiptap-vuetify'
+import { TiptapVuetify, 
+          Heading, 
+          Bold, 
+          Italic, 
+          Strike, 
+          Underline, 
+          Paragraph, 
+          BulletList, 
+          OrderedList, 
+          ListItem, 
+          Link, 
+          Blockquote, 
+          HardBreak, 
+          HorizontalRule, 
+          History 
+        } from 'tiptap-vuetify'
 
 export default {
-  props: [
-    'content',
-  ],
+
   // specify TiptapVuetify component in "components"
   components: { TiptapVuetify },
   data: () => ({
@@ -36,7 +51,6 @@ export default {
         }
       }],
       Bold,
-      Code,
       HorizontalRule,
       Paragraph,
       HardBreak
