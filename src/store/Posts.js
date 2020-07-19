@@ -32,5 +32,16 @@ export const actions = {
         console.log('[!] get_posts', error);
         return false;
     })
+  },
+
+  get_posts_by_id({commit}, payload) {
+    return posts.getPostsById(payload)
+      .then( response => {
+        commit('SET_POSTS', response.data);
+        console.log('[*] get_posts_by_id', response.data);
+      })
+      .catch( error => {
+        console.log('[!] get_posts_by_id', error);
+    })
   }
 }

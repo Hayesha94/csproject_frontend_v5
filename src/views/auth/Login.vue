@@ -63,6 +63,7 @@ export default {
         'email': '',
         'password': '',
       },
+      show: true,
     }
   },
   computed: {
@@ -75,10 +76,14 @@ export default {
       this.$store.dispatch('Login/login_user', this.credentials)
         .then( success => {
           if (success === true) {
+            this.$store.dispatch('Snackbar/set_snackbar', {
+              text: 'Login Success',
+              color: 'green'
+            });
             if (this.role == 'tourist') {
               this.$router.push( {name: 'tourist-dashboardwall'});
             } else if (this.role == 'guide') {
-              this.$router.push( {name: 'guide-dashboard'});
+              this.$router.push( {name: 'guide-dashboard-page'});
             }
           }
       });

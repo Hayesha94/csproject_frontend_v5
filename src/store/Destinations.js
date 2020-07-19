@@ -1,10 +1,12 @@
 import destinations from '@/services/Destinations.js';
+
 export const namespaced = true;
 
 export const state = {
-  destinations: null,
-  categories: null,
-  preferred_destinations: null,
+  destinations: [],
+  categories: [],
+  preferred_destinations: [],
+  selected_destinations: [],
 }
 
 export const getters = {
@@ -26,6 +28,18 @@ export const getters = {
       return state.preferred_destinations;
     }
   },
+  selectedDestinations(state) {
+    if (state.selected_destinations) {
+      return state.selected_destinations;
+    }
+  },
+  selectedLocations(state) {
+    if (state.selected_destinations) {
+      return state.selected_destinations
+        .map(destination => destination.destination_to_locations)
+        .flat();
+    }
+  }
 }
 
 export const mutations = {
@@ -41,6 +55,10 @@ export const mutations = {
 
   SET_CATEGORIES(state, payload) {
     state.categories = payload;
+  },
+
+  SET_SELECTED_DESTINATIONS(state, payload) {
+    state.selected_destinations = payload;
   }
 }
 
@@ -67,6 +85,9 @@ export const actions = {
   },
 
   set_destinations_by_preferances({commit}, payload) {
-    commit('SET_PREFERRED_DESTINATIONS', payload);
-  }
+    return destinations.getDestinationsByPreferance(payload)
+      .then( response => {
+        commit('SET_PREFERRED_DESTINATIONS', response.data);
+    })
+  },
 }

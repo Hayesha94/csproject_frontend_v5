@@ -33,7 +33,7 @@ export default {
       if (this.role === 'tourist') {
         return 'tourist-dashboardwall';
       } else if (this.role === 'guide') {
-        return 'guide-dashboard';
+        return 'guide-dashboard-page';
       } else {
         return true;
       }

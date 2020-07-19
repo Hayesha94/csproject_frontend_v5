@@ -3,7 +3,8 @@ import guide from '@/services/Guides.js';
 export const namespaced = true;
 
 export const state = {
-	guides: null,
+	guides: [],
+	guidesByRegion: [],
 }
 
 export const getters = {
@@ -11,13 +12,23 @@ export const getters = {
     if (state.guides) {
       return state.guides;
     }
-  }
+  },
+  guidesByRegion(state) {
+    if (state.guidesByRegion) {
+      return state.guidesByRegion;
+    }
+  },
 }
 
 export const mutations = {
 	SET_GUIDES(state, response) {
 		if (response) {
 			state.guides = response;
+		}
+	},
+	SET_GUIDES_REGION(state, response) {
+		if (response) {
+			state.guidesByRegion = response;
 		}
 	},
 }
@@ -34,10 +45,14 @@ export const actions = {
 		})
 	},
 
-	get_guides_by_destination( {commit}, {payload}) {
-    return guide.guidesByDestination(payload)
+	get_guides_by_destination( {commit}, payload) {
+    return guide.getGuidesByRegion(payload)
       .then( response => {
-        commit('SET_GUIDES', response.data);
+        console.log('[*] get_guides_by_destination', response.data);
+        commit('SET_GUIDES_REGION', response.data);
       })
-	}
+      .catch( error => {
+        console.log('[!] get_guides_by_destination', error);
+      })
+	},
 }

@@ -11,6 +11,8 @@ import * as Posts from '@/store/Posts.js';
 import * as Destinations from '@/store/Destinations.js';
 import * as Guides from '@/store/Guides.js';
 import * as Appointments from '@/store/Appointments.js';
+import * as Snackbar from '@/store/Snackbar.js';
+import * as Follows from '@/store/Follows.js';
 
 Vue.use(Vuex);
 
@@ -27,6 +29,8 @@ export default new Vuex.Store({
     Destinations,
     Guides,
     Appointments,
+    Snackbar,
+    Follows,
   }
 });
 

@@ -13,16 +13,18 @@ import TProfile from '@/views/tourist/profile/Profile.vue';
 import TPersonalInfo from '@/views/tourist/profile/PersonalInfo.vue';
 import TImageGallery from '@/views/tourist/profile/ImageGallery.vue';
 import TDashboardWall from '@/views/tourist/dashboard/DashboardWall.vue';
-import TAppointments from '@/views/tourist/appointments/Appointments.vue'
-import TViewAppointments from '@/views/tourist/appointments/ViewAppointments.vue'
-import TCreateAppointment from '@/views/tourist/appointments/CreateAppointment.vue'
+import TAppointments from '@/views/tourist/appointments/Appointments.vue';
+import TViewAppointments from '@/views/tourist/appointments/ViewAppointments.vue';
+import TCreateAppointment from '@/views/tourist/appointments/CreateAppointment.vue';
 
 // guide pages
 import GDashboard from '@/views/guide/Dashboard.vue';
+import GDashboardPage from '@/views/guide/dashboard/Dashboard.vue';
 import GProfile from '@/views/guide/profile/Profile.vue';
 import GPosts from '@/views/guide/posts/Posts.vue';
-import GViewPosts from '@/views/guide/posts/ViewPosts.vue'
-import GCreatePost from '@/views/guide/posts/CreatePost.vue'
+import GViewPosts from '@/views/guide/posts/ViewPosts.vue';
+import GCreatePost from '@/views/guide/posts/CreatePost.vue';
+import GViewAppointments from '@/views/guide/appointments/ViewAppointments.vue';
 
 import { Store } from "vuex";
 
@@ -101,6 +103,11 @@ const routes = [
     meta: { authOnly: true},
     children: [
       {
+        path: 'dashboard',
+        name: 'guide-dashboard-page',
+        component: GDashboardPage,
+      },
+      {
         path: 'profile',
         name: 'guide-profile',
         component: GProfile,
@@ -121,6 +128,11 @@ const routes = [
             component: GCreatePost,
           },
         ]
+      },
+      {
+        path: 'appointments',
+        name: 'guide-appointments',
+        component: GViewAppointments,
       },
     ]
   },

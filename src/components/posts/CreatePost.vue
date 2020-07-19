@@ -30,26 +30,24 @@
           </div>
         </v-stepper-step>
 
-        <v-divider></v-divider>
-
         <!-- step 3 -->
-        <v-stepper-step 
+        <!-- <v-stepper-step 
           step="3"
           :complete="step > 3"
         >
           STEP 3
-        </v-stepper-step>
+        </v-stepper-step> -->
 
-        <v-divider></v-divider>
+        <!-- <v-divider></v-divider> -->
 
         <!-- step 4 -->
-        <v-stepper-step 
+        <!-- <v-stepper-step 
           step="4"
         >
           <div>
             <h1 class="subtitle-2">Publish {{ post_type }} </h1>
           </div>
-        </v-stepper-step>
+        </v-stepper-step> -->
         
       </v-stepper-header>
 
@@ -68,10 +66,9 @@
               <v-radio-group  v-model="post_type" class="ml-10" dense>
                 <v-radio label="New Article" value="article"></v-radio>
                 <v-radio label="New Event" value="event"></v-radio>
-                <v-radio label="radio 3" value="3"></v-radio>
               </v-radio-group>
             </v-card-text>
-            <v-card-actions class="d-flex justify-center">
+            <v-card-actions class="d-flex justify-space-between">
               <v-btn
                 small
                 class="primary"
@@ -94,12 +91,25 @@
         <v-stepper-content
           step="2"
         >
-          <v-card 
+          <v-card
             flat
           >
             <v-card-title>Create {{ post_type }}</v-card-title>
             <v-card-text v-if="post_type == 'article'">
-              <Editor></Editor>
+              <div>
+                <v-text-field
+                  v-model="article.title"
+                  label="Enter the title"
+                  class="mb-5"
+                ></v-text-field>
+                <!-- Use the component in the right place of the template -->
+                <tiptap-vuetify
+                  v-model="article.body"
+                  :extensions="extensions"
+                  :card-props="{  }"
+                  placeholder="Write Something"
+                />
+              </div>
             </v-card-text>
             <v-card-text v-else-if="post_type == 'event'">
               <v-expansion-panels
@@ -174,42 +184,30 @@
                     </v-row>
                   </v-expansion-panel-header>
                   <v-expansion-panel-content>
-                    <v-row no-gutters>
-                      <v-spacer></v-spacer>
-                      <v-col cols="5">
+                    <v-row class="d-flex flex-column">
+                      <v-col>
                         <v-select
-                          v-model="event.locations"
-                          :items="destinations"
-                          item-text="name"
-                          item-value="id"
+                          v-model="selectedDestination"
                           chips
-                          flat
-                        
                           clearable
-                        ></v-select>
+                          :items='destinations'
+                          item-text="name"
+                          return-object
+                          label="Select a Destination"
+                        >
+                        </v-select>
                       </v-col>
-
-                      <v-col cols="3">
-                        Select your destination of choice
-                      </v-col>
-                    </v-row>
-                    <v-row no-gutters>
-                      <v-spacer></v-spacer>
-                      <v-col cols="5">
+                      <v-col>
                         <v-select
-                          v-model="event.activities"
-                          :items="activities"
-                          item-text="name"
-                          item-value="id"
+                          v-model="event.location"
                           chips
-                          flat
-                        
                           clearable
-                        ></v-select>
-                      </v-col>
-
-                      <v-col cols="3">
-                        Select Activities
+                          :items='selectedDestination.destination_to_locations'
+                          item-text="name"
+                          return-object
+                          label="Select a Location"
+                        >
+                        </v-select>
                       </v-col>
                     </v-row>
                   </v-expansion-panel-content>
@@ -314,13 +312,19 @@
             <v-card-text v-else>
               <p>This is 3</p>
             </v-card-text>
-            <v-card-actions class="d-flex justify-center">
+            <v-card-actions class="d-flex justify-space-between">
               <v-btn
                 small
                 class="primary"
                 @click="back()"
               >
                 Back
+              </v-btn>
+              <v-btn
+                @click="publish()"
+                class="success"
+              >
+                Publish
               </v-btn>
               <v-btn
                 small
@@ -334,7 +338,7 @@
         </v-stepper-content><!-- /item 2 -->
 
         <!-- item 3 -->
-        <v-stepper-content 
+        <!-- <v-stepper-content 
           step="3"
         >
           <v-card 
@@ -362,10 +366,10 @@
               </v-btn>
             </v-card-actions>
           </v-card>
-        </v-stepper-content><!-- /item 3 -->
+        </v-stepper-content> --><!-- /item 3 -->
 
         <!-- item 4 -->
-        <v-stepper-content 
+        <!-- <v-stepper-content 
           step="4"
         >
           <v-card 
@@ -393,7 +397,8 @@
               </v-btn>
             </v-card-actions>
           </v-card>
-        </v-stepper-content><!-- item 4 -->
+        </v-stepper-content> --><!-- item 4 -->
+
       </v-stepper-items>
     </v-stepper>
   </div>
@@ -401,29 +406,67 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import Editor from '@/components/Editor.vue';
+
+import { TiptapVuetify, 
+          Heading, 
+          Bold, 
+          Italic, 
+          Strike, 
+          Underline, 
+          Paragraph, 
+          BulletList, 
+          OrderedList, 
+          ListItem, 
+          Link, 
+          Blockquote, 
+          HardBreak, 
+          HorizontalRule, 
+          History 
+        } from 'tiptap-vuetify'
 
 export default {
   name: 'CreatePostComponent',
   components: {
-    Editor,
+    TiptapVuetify
   },
   data() {
     return {
+      extensions: [
+        History,
+        Blockquote,
+        Link,
+        Underline,
+        Strike,
+        Italic,
+        ListItem,
+        BulletList,
+        OrderedList,
+        [Heading, {
+          options: {
+            levels: [1, 2, 3]
+          }
+        }],
+        Bold,
+        HorizontalRule,
+        Paragraph,
+        HardBreak
+      ],
       step: '1',
       low_step: '1',
-      high_step: '4',
+      high_step: '2',
       post_type: 'article',
       event: this.freshEventObject(),
       article: {
         title: '',
         body: '',
-      }
+      },
+      selectedDestination: [],
     }
   },
   computed: {
     ...mapGetters({
-      user_id: 'Login/user_id',
+      user_id: 'Login/userId',
+      destinations: 'Destinations/destinations'
     })
   },
   methods: {
@@ -439,7 +482,11 @@ export default {
     },
     publish() {
       if (this.post_type === 'article') {
-        this.$store.dispatch('Articles/store_articles', this.article)
+        this.$store.dispatch('Articles/store_articles', {
+          title: this.article.title,
+          body: this.article.body,
+          user_id: this.user_id,
+        })
           .then( success => {
             if (success) {
               alert('article success');
@@ -451,7 +498,7 @@ export default {
       } else if (this.post_type === 'event') {
         this.$store.dispatch('Events/store_events', {
           event: this.event,
-          guide_id: 2,
+          user_id: this.user_id,
         })
           .then( success => {
             if (success) {
@@ -461,7 +508,7 @@ export default {
             else {
               alert('event unsuccess');
             }
-          })
+          });
       } else {
         console.log('publish else');
       }

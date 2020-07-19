@@ -20,8 +20,9 @@
             </div>
           </div>
         </v-card-title>
-        <v-divider></v-divider>
-        <v-card-text v-html="article.body">
+        <v-card-text>
+          <h1 class="mb-4" v-html="article.title"></h1>
+          <p v-html="article.body"></p>
         </v-card-text>
       </v-card>
     </v-col>

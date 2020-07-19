@@ -70,7 +70,7 @@
           ></v-select>
         </v-col>
         <v-col>
-          <v-select
+          <!-- <v-select
             v-model="secondary_langs"
             label="Other Languages"
             prepend-icon="mdi-web"
@@ -80,7 +80,7 @@
             multiple
             :items="languages"
             item-text="name"
-          ></v-select>
+          ></v-select> -->
         </v-col>
       </v-row>
       <v-row>
@@ -127,23 +127,29 @@
               <v-row>
                 <v-col class="d-flex flex-column col-3">
                   <v-avatar
-                    class="profile"
                     color="grey"
                     size="164"
                     tile
                   >
-                    <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"></v-img>
+                    <v-img :src="item.guide_to_user.dp_url"></v-img> 
                   </v-avatar>
+                  <v-btn
+                    text
+                    color="primary"
+                    @click="followUser(item.guide_to_user.id)"
+                  >
+                    follow me
+                  </v-btn>
                 </v-col>
                 <v-col>
                   <div class="d-flex">
                     <div class="d-flex flex-column align-baseline">
                       <h1 class="title">{{ item.guide_to_user.fname }} {{ item.guide_to_user.lname }}</h1>
-                      <span class="d-flex align-start">
-                        (334/3434)
+                      <span class="d-flex align-baseline">
+                        ({{ calRating(item) }}/{{ item.review_count }})
                         <v-rating
                           class="ml-2 d-flex align-start"
-                          v-model="item.rating"
+                          :value="calRating(item)"
                           background-color="white"
                           color="yellow accent-4"
                           dense
@@ -179,13 +185,14 @@
                         small
                         class="primary mr-2"
                         v-on="on"
+                        @click="showReviews(item.id)"
                       >
-                        My Profile
+                        show reviews
                       </v-btn>
                       <v-btn
                         small
                         class="success"
-                        @click="selectGuide(item.id)"
+                        @click="selectGuide(item)"
                       >
                         Select Me
                       </v-btn>
@@ -198,14 +205,21 @@
         </v-data-table>
       </v-col>
     </v-row>
-
+    
+    <showReviews :show="showReviewDialog" @hideDialog="showReviewDialog = false" :guide="guide"></showReviews>
   </v-row>
 </template>
 
 <script>
+import showReviews from '@/components/ShowReviews.vue';
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'GuidesTableComponent',
   props: ['guides'],
+  components: {
+    showReviews,
+  },
   data() {
     return {
       rating: 0,
@@ -223,6 +237,8 @@ export default {
       ],
       primary_lang: '',
       secondary_langs: [],
+      showReviewDialog: false,
+      guide: [],
     }
   },
   computed: {
@@ -233,6 +249,10 @@ export default {
         { text: 'Assigned Region', value: 'region'},
       ]
     },
+
+    ...mapGetters({
+      user: 'Login/user',
+    })
   },
   methods: {
     decrement() {
@@ -241,10 +261,45 @@ export default {
     increment() {
       this.rating++
     },
-    selectGuide(id) {
-      this.$store.commit('Appointments/SET_GUIDE_ID', id);
+    selectGuide(guide) {
+      this.$store.commit('Appointments/SET_GUIDE', guide);
+      this.$store.dispatch('Snackbar/set_snackbar', {
+        text: `You selected ${guide.guide_to_user.fname} as your guide`,
+        color: 'green',
+        rounded: true,
+      })
+      console.log('guide', guide);
+    },
+    showReviews(guide) {
+      this.showReviewDialog = true;
+      this.guide = guide;
+    },
+    calRating(arr) {
+      let star_count = arr.star_1 + arr.star_2 + arr.star_3 + arr.star_4 + arr.star_5;
+      let tot = Number((1 * arr.star_1 + 2 * arr.star_2 + 3 * arr.star_3 + 4 * arr.star_4 + 5 * arr.star_5) / star_count)
+                  .toFixed(1);
+      if (tot === 'NaN') {
+        return 0;
+      } else {
+        return tot;
+      }
+    },
+    followUser(id) {
+      this.$store.dispatch('Follows/add_follow', {
+        user_id: this.user.id,
+        following_user_id: id,
+      })
+      /* console.log('id', id); */
     }
   },
+  /* watch: {
+    destinations: {
+      immediate: true,
+      handler() {
+        this.getGuidesByRegion();
+      }
+    }
+  } */
 }
 </script>
 

@@ -6,6 +6,7 @@
       :extensions="extensions"
       :card-props="{ flat: true }"
       placeholder="Write Something"
+      @blur="addContent(value)"
     />
   </div>
 </template>
@@ -57,6 +58,11 @@ export default {
     ],
     // starting editor's content
     content: '',
-  })
+  }),
+  methods: {
+    addContent(value) {
+      console.log('In editor', value);
+    }
+  }
 }
 </script>

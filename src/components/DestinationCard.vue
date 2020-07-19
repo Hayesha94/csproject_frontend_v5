@@ -27,7 +27,7 @@ export default {
   ],
   data() {
     return {
-      des: this.findDestinationByID(this.destination),
+      des: this.findDestinationByID(this.destination.id),
     }
   },
   methods: {
